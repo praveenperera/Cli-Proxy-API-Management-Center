@@ -1,0 +1,42 @@
+{
+  "basic_settings": {
+    "routing_strategy_ordered": "ordered (by criteria)"
+  },
+  "auth_files": {
+    "priority_label": "Routing order",
+    "priority_hint": "Use first sends requests to this account before the others, and Use last only when the others are unavailable. Use − and + for an exact order: the highest number is tried first.",
+    "priority_exact": "Exact routing order",
+    "priority_decrease": "Lower routing order",
+    "priority_increase": "Raise routing order",
+    "routing_first": "Use first",
+    "routing_normal": "Normal",
+    "routing_last": "Use last"
+  },
+  "config_management": {
+    "visual": {
+      "sections": {
+        "network": {
+          "strategy_ordered": "Ordered",
+          "routing_order": "Routing Order",
+          "routing_order_hint": "New sessions go to the credential that ranks first. Earlier criteria decide and later ones break ties. Existing sessions stay on their credential until it fails, so prompt caches stay warm.",
+          "routing_order_add": "Add criterion",
+          "routing_order_move_up": "Move up",
+          "routing_order_move_down": "Move down",
+          "routing_order_remove": "Remove",
+          "routing_order_default": "No criteria set; the default order applies: weekly reset, session remaining, priority.",
+          "routing_order_unknown": "Not supported by this panel version; kept as configured",
+          "order_priority": "Priority",
+          "order_priority_hint": "Higher priority field first",
+          "order_weekly_reset": "Weekly reset",
+          "order_weekly_reset_hint": "Weekly window that resets soonest, so expiring quota is used first",
+          "order_session_reset": "Session reset",
+          "order_session_reset_hint": "Short window (Claude five-hour) that resets soonest",
+          "order_weekly_remaining": "Weekly remaining",
+          "order_weekly_remaining_hint": "Most weekly quota left, scaled by quota weight",
+          "order_session_remaining": "Session remaining",
+          "order_session_remaining_hint": "Most short-window quota left, scaled by quota weight"
+        }
+      }
+    }
+  }
+}

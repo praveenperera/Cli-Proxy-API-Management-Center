@@ -1,0 +1,7 @@
+// presets and the exact-value stepper share one row and wrap on narrow sheets
+.choiceRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}

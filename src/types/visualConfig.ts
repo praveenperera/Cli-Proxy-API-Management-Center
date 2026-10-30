@@ -1,6 +1,6 @@
 export type PayloadParamValueType = 'string' | 'number' | 'boolean' | 'json';
 export type DisableImageGenerationMode = 'false' | 'true' | 'chat' | 'passthrough';
-export type RoutingStrategy = 'round-robin' | 'weighted-round-robin' | 'fill-first';
+export type RoutingStrategy = 'round-robin' | 'weighted-round-robin' | 'fill-first' | 'ordered';
 export type PluginStoreAuthType = 'none' | 'bearer' | 'basic' | 'header' | 'github-token';
 export type PluginStoreAuthApplyTo = 'registry' | 'metadata' | 'artifact';
 export type PayloadParamValidationErrorCode =
@@ -190,7 +190,8 @@ export type VisualConfigValues = {
   /** OAuth-only: oauth.providers.antigravity.antigravity-credits. */
   quotaAntigravityCredits: boolean;
   routingStrategy: RoutingStrategy;
-  routingSessionAffinity: boolean;
+  /** routing.order; empty means the backend default. Unknown criteria are kept as configured */
+  routingOrder: string[];
   routingSessionAffinityTTL: string;
   wsAuth: boolean;
   antigravitySensitiveWords: string[];
@@ -291,7 +292,7 @@ export const DEFAULT_VISUAL_VALUES: VisualConfigValues = {
   authAutoRefreshWorkers: '',
   quotaAntigravityCredits: false,
   routingStrategy: 'round-robin',
-  routingSessionAffinity: false,
+  routingOrder: [],
   routingSessionAffinityTTL: '',
   wsAuth: true,
   antigravitySensitiveWords: [],

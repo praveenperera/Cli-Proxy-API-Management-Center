@@ -1,0 +1,52 @@
+/* ranked rows for routing.order, inside the shared .stringList block */
+
+.routingOrderList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.routingOrderRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.routingOrderRank {
+  flex: none;
+  width: 22px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.routingOrderText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.routingOrderLabel {
+  font-weight: 500;
+}
+
+.routingOrderHint {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.routingOrderAdd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}

@@ -1,0 +1,42 @@
+{
+  "basic_settings": {
+    "routing_strategy_ordered": "ordered (조건 순서)"
+  },
+  "auth_files": {
+    "priority_label": "라우팅 순서",
+    "priority_hint": "우선 사용은 이 계정으로 다른 계정보다 먼저 요청을 보내고, 나중 사용은 다른 계정을 쓸 수 없을 때만 사용합니다. − 와 + 로 정확한 순서를 정할 수 있으며, 숫자가 가장 큰 계정을 먼저 시도합니다.",
+    "priority_exact": "정확한 라우팅 순서",
+    "priority_decrease": "라우팅 순서 낮추기",
+    "priority_increase": "라우팅 순서 높이기",
+    "routing_first": "먼저 사용",
+    "routing_normal": "보통",
+    "routing_last": "나중에 사용"
+  },
+  "config_management": {
+    "visual": {
+      "sections": {
+        "network": {
+          "strategy_ordered": "조건 순서",
+          "routing_order": "라우팅 순서",
+          "routing_order_hint": "새 세션은 1순위 자격 증명으로 갑니다. 앞의 조건이 우선 결정하고 뒤의 조건은 동점을 가립니다. 기존 세션은 실패할 때까지 같은 자격 증명에 남아 프롬프트 캐시를 유지합니다.",
+          "routing_order_add": "조건 추가",
+          "routing_order_move_up": "위로",
+          "routing_order_move_down": "아래로",
+          "routing_order_remove": "제거",
+          "routing_order_default": "조건이 없으면 기본 순서를 사용합니다: 주간 리셋, 세션 잔여량, 우선순위.",
+          "routing_order_unknown": "이 패널 버전에서 지원하지 않음; 설정대로 유지됩니다",
+          "order_priority": "우선순위",
+          "order_priority_hint": "priority 값이 높은 쪽 우선",
+          "order_weekly_reset": "주간 리셋",
+          "order_weekly_reset_hint": "주간 한도가 가장 먼저 리셋되는 쪽 우선",
+          "order_session_reset": "세션 리셋",
+          "order_session_reset_hint": "짧은 창(Claude 5시간)이 가장 먼저 리셋되는 쪽 우선",
+          "order_weekly_remaining": "주간 잔여량",
+          "order_weekly_remaining_hint": "주간 잔여량이 가장 많은 쪽 우선, 한도 가중치 반영",
+          "order_session_remaining": "세션 잔여량",
+          "order_session_remaining_hint": "짧은 창 잔여량이 가장 많은 쪽 우선, 한도 가중치 반영"
+        }
+      }
+    }
+  }
+}

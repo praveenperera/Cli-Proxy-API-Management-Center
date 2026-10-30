@@ -8,6 +8,8 @@
 // tests/configFieldParity.test.ts enforces the three-way parity — a missing or
 // extra entry anywhere fails CI.
 
+import { ROUTING_ORDER_SEARCH_ENTRY } from './routingOrder';
+
 export type VisualSectionId =
   'connectivity' | 'network' | 'logging' | 'streaming' | 'advanced' | 'payload';
 
@@ -412,8 +414,9 @@ export const CONFIG_FIELD_SEARCH_INDEX: ConfigFieldSearchEntry[] = [
     labelKey: L('sections.network.routing_strategy'),
     hintKey: L('sections.network.routing_strategy_hint'),
     yamlKeys: ['routing', 'strategy'],
-    keywords: ['round-robin', 'weighted-round-robin', 'wrr', 'fill-first'],
+    keywords: ['round-robin', 'weighted-round-robin', 'wrr', 'fill-first', 'ordered'],
   },
+  ROUTING_ORDER_SEARCH_ENTRY,
   {
     fieldId: 'disableImageGeneration',
     sectionId: 'network',
@@ -455,12 +458,6 @@ export const CONFIG_FIELD_SEARCH_INDEX: ConfigFieldSearchEntry[] = [
     labelKey: L('sections.network.disable_cooling'),
     hintKey: L('sections.network.disable_cooling_desc'),
     yamlKeys: ['routing', 'cooldown', 'disable-cooling'],
-  },
-  {
-    fieldId: 'routingSessionAffinity',
-    sectionId: 'network',
-    labelKey: L('sections.network.session_affinity'),
-    yamlKeys: ['routing', 'session-affinity'],
   },
   {
     fieldId: 'wsAuth',

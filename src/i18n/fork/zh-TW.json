@@ -1,0 +1,42 @@
+{
+  "basic_settings": {
+    "routing_strategy_ordered": "ordered（依條件排序）"
+  },
+  "auth_files": {
+    "priority_label": "路由順序",
+    "priority_hint": "優先使用會先把請求送到此帳號，最後使用僅在其他帳號無法使用時才使用。用 − 和 + 設定精確順序：數字最大的帳號最先嘗試。",
+    "priority_exact": "精確路由順序",
+    "priority_decrease": "降低路由順序",
+    "priority_increase": "提高路由順序",
+    "routing_first": "優先使用",
+    "routing_normal": "一般",
+    "routing_last": "最後使用"
+  },
+  "config_management": {
+    "visual": {
+      "sections": {
+        "network": {
+          "strategy_ordered": "依條件排序",
+          "routing_order": "路由順序",
+          "routing_order_hint": "新工作階段分配給排名第一的憑證。靠前的條件優先決定，靠後的條件用於打破平手。既有工作階段會留在原憑證直到其失敗，以維持提示快取命中。",
+          "routing_order_add": "新增條件",
+          "routing_order_move_up": "上移",
+          "routing_order_move_down": "下移",
+          "routing_order_remove": "移除",
+          "routing_order_default": "未設定條件，使用預設順序：每週重置、工作階段剩餘、優先級。",
+          "routing_order_unknown": "此面板版本不支援；依原設定保留",
+          "order_priority": "優先級",
+          "order_priority_hint": "priority 欄位較高者優先",
+          "order_weekly_reset": "每週重置",
+          "order_weekly_reset_hint": "每週額度最早重置者優先，先用掉即將過期的額度",
+          "order_session_reset": "工作階段重置",
+          "order_session_reset_hint": "短視窗（Claude 五小時）最早重置者優先",
+          "order_weekly_remaining": "每週剩餘",
+          "order_weekly_remaining_hint": "每週剩餘額度最多者優先，依額度權重縮放",
+          "order_session_remaining": "工作階段剩餘",
+          "order_session_remaining_hint": "短視窗剩餘額度最多者優先，依額度權重縮放"
+        }
+      }
+    }
+  }
+}

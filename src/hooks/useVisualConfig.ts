@@ -33,6 +33,7 @@ import {
   writeVisualServer,
   validateVisualServer,
 } from '@/features/config/visualConfigServer';
+import { parseRoutingOrder } from '@/features/config/routingOrder';
 
 function asRecord(value: unknown): Record<string, unknown> | null {
   if (value === null || typeof value !== 'object' || Array.isArray(value)) return null;
@@ -434,6 +435,7 @@ export function parseRoutingStrategy(raw: unknown): RoutingStrategy {
     return 'weighted-round-robin';
   }
   if (['fill-first', 'fillfirst', 'ff'].includes(normalized)) return 'fill-first';
+  if (normalized === 'ordered') return 'ordered';
   return 'round-robin';
 }
 
@@ -1252,10 +1254,16 @@ function getNextDirtyFields(
       'wsAuth',
       'quotaAntigravityCredits',
       'routingStrategy',
-      'routingSessionAffinity',
       'routingSessionAffinityTTL',
     ] as Array<keyof VisualConfigValues>
   ).forEach(updateScalarDirty);
+
+  if (Object.prototype.hasOwnProperty.call(patch, 'routingOrder')) {
+    updateDirty(
+      'routingOrder',
+      areStringArraysEqual(nextValues.routingOrder, baselineValues.routingOrder)
+    );
+  }
 
   if (Object.prototype.hasOwnProperty.call(patch, 'pluginStoreSources')) {
     updateDirty(
@@ -1524,7 +1532,7 @@ function parseVisualValuesFromYaml(yamlContent: string): VisualConfigValues {
     quotaAntigravityCredits: Boolean(antigravity?.['antigravity-credits'] ?? false),
 
     routingStrategy: parseRoutingStrategy(routing?.strategy),
-    routingSessionAffinity: Boolean(routing?.['session-affinity']),
+    routingOrder: parseRoutingOrder(routing?.order),
     routingSessionAffinityTTL:
       typeof routing?.['session-affinity-ttl'] === 'string' ? routing['session-affinity-ttl'] : '',
 
@@ -1667,7 +1675,7 @@ export function useVisualConfig() {
             'maxRetryInterval',
             'disableCooling',
             'routingStrategy',
-            'routingSessionAffinity',
+            'routingOrder',
             'routingSessionAffinityTTL',
           ].some((field) => dirtyFields.has(field as keyof VisualConfigValues))
         ) {
@@ -1980,15 +1988,15 @@ export function useVisualConfig() {
 
         const routingDirty =
           dirtyFields.has('routingStrategy') ||
-          dirtyFields.has('routingSessionAffinity') ||
+          dirtyFields.has('routingOrder') ||
           dirtyFields.has('routingSessionAffinityTTL');
         if (routingDirty) {
           ensureMapInDoc(doc, ['routing']);
           if (dirtyFields.has('routingStrategy')) {
             doc.setIn(['routing', 'strategy'], values.routingStrategy);
           }
-          if (dirtyFields.has('routingSessionAffinity')) {
-            setBooleanInDoc(doc, ['routing', 'session-affinity'], values.routingSessionAffinity);
+          if (dirtyFields.has('routingOrder')) {
+            setStringListInDoc(doc, ['routing', 'order'], values.routingOrder);
           }
           if (dirtyFields.has('routingSessionAffinityTTL')) {
             setStringInDoc(

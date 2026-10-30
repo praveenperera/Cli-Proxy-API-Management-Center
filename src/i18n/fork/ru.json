@@ -1,0 +1,42 @@
+{
+  "basic_settings": {
+    "routing_strategy_ordered": "ordered (по критериям)"
+  },
+  "auth_files": {
+    "priority_label": "Порядок маршрутизации",
+    "priority_hint": "«Сначала» отправляет запросы на этот аккаунт раньше остальных, «В конце» — только когда остальные недоступны. Кнопки − и + задают точный порядок: первым пробуется наибольшее число.",
+    "priority_exact": "Точный порядок маршрутизации",
+    "priority_decrease": "Понизить порядок",
+    "priority_increase": "Повысить порядок",
+    "routing_first": "Сначала",
+    "routing_normal": "Обычно",
+    "routing_last": "В последнюю очередь"
+  },
+  "config_management": {
+    "visual": {
+      "sections": {
+        "network": {
+          "strategy_ordered": "По критериям",
+          "routing_order": "Порядок маршрутизации",
+          "routing_order_hint": "Новые сессии получает учетная запись, которая стоит первой. Ранние критерии решают, поздние разрешают ничьи. Существующие сессии остаются на своей учетной записи до сбоя, сохраняя кеш промптов.",
+          "routing_order_add": "Добавить критерий",
+          "routing_order_move_up": "Выше",
+          "routing_order_move_down": "Ниже",
+          "routing_order_remove": "Удалить",
+          "routing_order_default": "Критерии не заданы; используется порядок по умолчанию: недельный сброс, остаток сессии, приоритет.",
+          "routing_order_unknown": "Не поддерживается этой версией панели; сохраняется как настроено",
+          "order_priority": "Приоритет",
+          "order_priority_hint": "Сначала с большим полем priority",
+          "order_weekly_reset": "Недельный сброс",
+          "order_weekly_reset_hint": "Сначала та, чье недельное окно сбрасывается раньше",
+          "order_session_reset": "Сброс сессии",
+          "order_session_reset_hint": "Сначала та, чье короткое окно (Claude 5 часов) сбрасывается раньше",
+          "order_weekly_remaining": "Недельный остаток",
+          "order_weekly_remaining_hint": "Больше всего недельной квоты с учетом веса квоты",
+          "order_session_remaining": "Остаток сессии",
+          "order_session_remaining_hint": "Больше всего квоты короткого окна с учетом веса квоты"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+/* matches the segmented control's pill track so the two sit together on one row */
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: $radius-full;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+}
+
+.step {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  width: 30px;
+  height: 28px;
+  border-radius: $radius-full;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-secondary);
+  transition:
+    color var(--dur-hover, 200ms) var(--ease-out-strong, ease-out),
+    transform var(--dur-press, 160ms) var(--ease-out-strong, ease-out);
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.9);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: -1px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .step:hover:not(:disabled) {
+    color: var(--text-primary);
+  }
+}
+
+.value {
+  min-width: 28px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}

@@ -1,0 +1,42 @@
+{
+  "basic_settings": {
+    "routing_strategy_ordered": "ordered (theo tiêu chí)"
+  },
+  "auth_files": {
+    "priority_label": "Thứ tự định tuyến",
+    "priority_hint": "Dùng trước gửi yêu cầu tới tài khoản này trước các tài khoản khác, Dùng sau chỉ dùng khi các tài khoản khác không khả dụng. Dùng − và + để đặt thứ tự chính xác: số lớn nhất được thử trước.",
+    "priority_exact": "Thứ tự định tuyến chính xác",
+    "priority_decrease": "Giảm thứ tự định tuyến",
+    "priority_increase": "Tăng thứ tự định tuyến",
+    "routing_first": "Dùng trước",
+    "routing_normal": "Bình thường",
+    "routing_last": "Dùng sau"
+  },
+  "config_management": {
+    "visual": {
+      "sections": {
+        "network": {
+          "strategy_ordered": "Theo tiêu chí",
+          "routing_order": "Thứ tự định tuyến",
+          "routing_order_hint": "Phiên mới đi tới thông tin xác thực xếp hạng đầu. Tiêu chí đứng trước quyết định, tiêu chí sau phá thế hòa. Phiên hiện có ở lại thông tin xác thực của nó cho tới khi lỗi, giữ bộ nhớ đệm prompt.",
+          "routing_order_add": "Thêm tiêu chí",
+          "routing_order_move_up": "Lên",
+          "routing_order_move_down": "Xuống",
+          "routing_order_remove": "Xóa",
+          "routing_order_default": "Chưa đặt tiêu chí; dùng thứ tự mặc định: đặt lại tuần, còn lại phiên, ưu tiên.",
+          "routing_order_unknown": "Phiên bản bảng điều khiển này không hỗ trợ; giữ nguyên như cấu hình",
+          "order_priority": "Ưu tiên",
+          "order_priority_hint": "Trường priority cao hơn trước",
+          "order_weekly_reset": "Đặt lại tuần",
+          "order_weekly_reset_hint": "Cửa sổ tuần đặt lại sớm nhất trước",
+          "order_session_reset": "Đặt lại phiên",
+          "order_session_reset_hint": "Cửa sổ ngắn (Claude 5 giờ) đặt lại sớm nhất trước",
+          "order_weekly_remaining": "Còn lại tuần",
+          "order_weekly_remaining_hint": "Còn nhiều hạn mức tuần nhất, theo trọng số hạn mức",
+          "order_session_remaining": "Còn lại phiên",
+          "order_session_remaining_hint": "Còn nhiều hạn mức cửa sổ ngắn nhất, theo trọng số hạn mức"
+        }
+      }
+    }
+  }
+}

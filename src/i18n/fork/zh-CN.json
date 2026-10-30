@@ -1,0 +1,42 @@
+{
+  "basic_settings": {
+    "routing_strategy_ordered": "ordered（按条件排序）"
+  },
+  "auth_files": {
+    "priority_label": "路由顺序",
+    "priority_hint": "优先使用会先把请求发给此账号，最后使用仅在其他账号不可用时才使用。用 − 和 + 设置精确顺序：数字最大的账号最先尝试。",
+    "priority_exact": "精确路由顺序",
+    "priority_decrease": "降低路由顺序",
+    "priority_increase": "提高路由顺序",
+    "routing_first": "优先使用",
+    "routing_normal": "普通",
+    "routing_last": "最后使用"
+  },
+  "config_management": {
+    "visual": {
+      "sections": {
+        "network": {
+          "strategy_ordered": "按条件排序",
+          "routing_order": "路由顺序",
+          "routing_order_hint": "新会话分配给排名第一的凭证。靠前的条件优先决定，靠后的条件用于打破平局。已有会话会保持在原凭证上直到其失败，以保持提示缓存命中。",
+          "routing_order_add": "添加条件",
+          "routing_order_move_up": "上移",
+          "routing_order_move_down": "下移",
+          "routing_order_remove": "移除",
+          "routing_order_default": "未设置条件，使用默认顺序：每周重置、会话剩余、优先级。",
+          "routing_order_unknown": "此面板版本不支持；按原配置保留",
+          "order_priority": "优先级",
+          "order_priority_hint": "priority 字段较高者优先",
+          "order_weekly_reset": "每周重置",
+          "order_weekly_reset_hint": "每周额度最早重置者优先，先用掉即将过期的额度",
+          "order_session_reset": "会话重置",
+          "order_session_reset_hint": "短窗口（Claude 五小时）最早重置者优先",
+          "order_weekly_remaining": "每周剩余",
+          "order_weekly_remaining_hint": "每周剩余额度最多者优先，按额度权重缩放",
+          "order_session_remaining": "会话剩余",
+          "order_session_remaining_hint": "短窗口剩余额度最多者优先，按额度权重缩放"
+        }
+      }
+    }
+  }
+}

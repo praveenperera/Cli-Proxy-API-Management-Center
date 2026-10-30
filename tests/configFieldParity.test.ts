@@ -21,6 +21,7 @@ import {
 } from '@/features/config/searchIndex';
 import { getVisualConfigValidationErrors } from '@/hooks/useVisualConfig';
 import { DEFAULT_VISUAL_VALUES } from '@/types/visualConfig';
+import { readLocale } from './helpers/forkLocale';
 
 const INDEX_FIELD_IDS = CONFIG_FIELD_SEARCH_INDEX.map((entry) => entry.fieldId);
 const INDEX_FIELD_ID_SET = new Set(INDEX_FIELD_IDS);
@@ -57,7 +58,7 @@ describe('search index integrity', () => {
   });
 
   test('label / qualifier / hint keys resolve to strings in en.json', async () => {
-    const json = (await Bun.file('src/i18n/locales/en.json').json()) as Record<string, unknown>;
+    const json = await readLocale('en');
     const resolveKey = (path: string): unknown =>
       path.split('.').reduce<unknown>((node, part) => {
         if (node && typeof node === 'object') return (node as Record<string, unknown>)[part];

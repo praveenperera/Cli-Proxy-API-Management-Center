@@ -5,6 +5,7 @@ import type { ConfigSectionProps } from '../../types';
 import { SectionCard } from '../SectionCard';
 import { SelectSetting, SettingList, TextSetting, ToggleSetting } from '../fields/FieldPrimitives';
 import { ProxyUrlField } from '../fields/sharedFields';
+import { RoutingOrderSetting } from '../blocks/RoutingOrderEditor';
 import { getValidationMessage } from '../blocks/shared';
 
 const Icon = CONFIG_TAB_ICONS.network;
@@ -34,6 +35,10 @@ export function SectionNetwork({
     {
       value: 'fill-first',
       label: t('config_management.visual.sections.network.strategy_fill_first'),
+    },
+    {
+      value: 'ordered',
+      label: t('config_management.visual.sections.network.strategy_ordered'),
     },
   ];
 
@@ -124,6 +129,15 @@ export function SectionNetwork({
           disabled={disabled}
           onChange={(routingStrategy) => onChange({ routingStrategy })}
         />
+        {values.routingStrategy === 'ordered' ? (
+          <RoutingOrderSetting
+            fieldId="routingOrder"
+            wide
+            value={values.routingOrder}
+            disabled={disabled}
+            onChange={(routingOrder) => onChange({ routingOrder })}
+          />
+        ) : null}
         <SelectSetting
           fieldId="disableImageGeneration"
           label={t('config_management.visual.sections.network.disable_image_generation')}
@@ -216,13 +230,6 @@ export function SectionNetwork({
           checked={values.disableCooling}
           disabled={disabled}
           onChange={(disableCooling) => onChange({ disableCooling })}
-        />
-        <ToggleSetting
-          fieldId="routingSessionAffinity"
-          label={t('config_management.visual.sections.network.session_affinity')}
-          checked={values.routingSessionAffinity}
-          disabled={disabled}
-          onChange={(routingSessionAffinity) => onChange({ routingSessionAffinity })}
         />
         <ToggleSetting
           fieldId="wsAuth"

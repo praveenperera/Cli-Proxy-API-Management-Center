@@ -20,6 +20,7 @@ import {
 import { MAX_CREDENTIAL_WEIGHT } from '@/utils/credentialWeight';
 import { AuthFileExcludedModelsField } from './AuthFileExcludedModelsField';
 import { AuthFilePolicyFields } from './AuthFilePolicyFields';
+import { RoutingOrderField } from './AuthFileRoutingFields';
 import { credentialPolicyError, readCredentialPolicy } from '../credentialPolicy';
 import styles from './AuthFileDetailsSheet.module.scss';
 
@@ -206,13 +207,10 @@ export function AuthFileDetailsSheet(props: AuthFileDetailsSheetProps) {
                     disabled={disableControls || editor.saving || !editor.json}
                     onChange={(e) => onChange('proxyUrl', e.target.value)}
                   />
-                  <Input
-                    label={t('auth_files.priority_label')}
-                    value={editor.priority}
-                    placeholder={t('auth_files.priority_placeholder')}
-                    hint={t('auth_files.priority_hint')}
+                  <RoutingOrderField
+                    editor={editor}
                     disabled={disableControls || editor.saving || !editor.json}
-                    onChange={(e) => onChange('priority', e.target.value)}
+                    onChange={onChange}
                   />
                   <Input
                     label={t('auth_files.weight_label')}

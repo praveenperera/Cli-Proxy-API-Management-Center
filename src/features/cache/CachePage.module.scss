@@ -1,0 +1,450 @@
+@use '../../styles/mixins' as *;
+
+/* cache page: same header vocabulary as the quota page (tight title, ▍ mono
+ * telemetry line, ink pill action), then an overview card and two tables */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+}
+
+/* ---------- header ---------- */
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 24px;
+  flex-wrap: wrap;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(26px, 3.2vw, 30px);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.meta {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  font-family: $font-mono;
+  font-size: 13px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+
+  &::before {
+    content: '▍';
+    color: var(--viz-success);
+    font-size: 13px;
+    line-height: 1;
+    align-self: center;
+    margin-right: 1px;
+  }
+}
+
+.metaDot {
+  color: var(--text-quaternary);
+  user-select: none;
+}
+
+.metaActive {
+  color: var(--viz-success);
+}
+
+.metaMuted {
+  color: var(--text-tertiary);
+}
+
+.metaFailed {
+  color: var(--viz-failure);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.primaryAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  cursor: pointer;
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  border-radius: $radius-full;
+  padding: 10px 18px;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1;
+  transition: transform var(--dur-press, 160ms) var(--ease-out-strong, ease-out);
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+}
+
+.spinning {
+  animation: cache-spin 0.8s linear infinite;
+}
+
+@keyframes cache-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- overview ---------- */
+
+.overview {
+  display: grid;
+  grid-template-columns: minmax(180px, auto) minmax(180px, auto) 1fr;
+  align-items: center;
+  gap: 20px 40px;
+  padding: 24px 28px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.heroLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.heroValue {
+  font-family: $font-mono;
+  font-variant-numeric: tabular-nums;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.heroSub {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+
+.heroNote {
+  font-size: 12px;
+  color: var(--text-quaternary);
+}
+
+.composition {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+
+  > :first-child {
+    height: 12px;
+    border-radius: 6px;
+  }
+}
+
+/* ---------- sections ---------- */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 20px;
+  flex-wrap: wrap;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 650;
+  color: var(--text-primary);
+}
+
+.sectionHint {
+  margin: 4px 0 0;
+  max-width: 640px;
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.accountFilter {
+  width: 220px;
+}
+
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 240px;
+  height: 34px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+
+  &:focus-within {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+}
+
+.searchIcon {
+  position: absolute;
+  left: 11px;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  height: 100%;
+  padding: 0 12px 0 32px;
+  border: 0;
+  border-radius: inherit;
+  outline: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+/* ---------- table cells ---------- */
+
+.num {
+  font-family: $font-mono;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.muted {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.accountName {
+  display: flex;
+}
+
+.accountCell {
+  white-space: nowrap;
+}
+
+.modelLine {
+  margin-top: 4px;
+  padding-left: 2px;
+  font-family: $font-mono;
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}
+
+.modelName {
+  font-family: $font-mono;
+  font-size: 12.5px;
+  color: var(--text-primary);
+}
+
+.compositionHead {
+  width: 22%;
+}
+
+.compositionCell {
+  vertical-align: middle !important;
+}
+
+.threadCell {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.threadText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+/* titles are prompt text, so they truncate to one line with the full text on hover */
+.threadTitle,
+.threadUntitled {
+  max-width: 360px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 550;
+  color: var(--text-primary);
+}
+
+.threadUntitled {
+  font-family: $font-mono;
+  font-weight: 500;
+}
+
+.threadMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  white-space: nowrap;
+}
+
+.project {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.subagentRow td {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  background: color-mix(in srgb, var(--bg-tertiary) 35%, transparent);
+}
+
+.nestMark {
+  padding-left: 6px;
+  line-height: 1.5;
+  color: var(--text-quaternary);
+}
+
+.sessionId {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 6px;
+  margin-left: -6px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  font-family: $font-mono;
+  font-size: 12px;
+  color: var(--text-tertiary);
+
+  svg {
+    color: var(--text-quaternary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 1px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sessionId:hover {
+    background: var(--bg-tertiary);
+
+    svg {
+      color: var(--text-secondary);
+    }
+  }
+}
+
+.badge {
+  padding: 1px 7px;
+  border-radius: $radius-full;
+  background: var(--bg-tertiary);
+  font-size: 11.5px;
+  color: var(--text-secondary);
+}
+
+.activeDot {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--viz-success);
+  }
+}
+
+.more {
+  display: flex;
+  justify-content: center;
+}
+
+@include mobile {
+  .header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .overview {
+    grid-template-columns: 1fr;
+  }
+
+  .accountFilter,
+  .search {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primaryAction {
+    transition: none;
+  }
+
+  .primaryAction:active:not(:disabled) {
+    transform: none;
+  }
+
+  .spinning {
+    animation: none;
+  }
+}

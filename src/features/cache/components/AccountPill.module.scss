@@ -1,0 +1,58 @@
+/* account hues, validated as a set on the card surfaces of both themes; green,
+ * red, orange, and yellow are left out so no account reads as good, an error, or
+ * a warning, and violet because it is hard to tell from the blue */
+.pill {
+  --account: var(--text-tertiary);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 2px 9px 2px 7px;
+  border: 1px solid color-mix(in srgb, var(--account) 38%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--account) 13%, transparent);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--account);
+}
+
+.label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slot1 {
+  --account: #2a78d6;
+}
+
+.slot2 {
+  --account: #c2549f;
+}
+
+.slot3 {
+  --account: #a8692a;
+}
+
+:global([data-theme='dark']) {
+  .slot1 {
+    --account: #3987e5;
+  }
+
+  .slot2 {
+    --account: #c95fae;
+  }
+
+  .slot3 {
+    --account: #b98035;
+  }
+}

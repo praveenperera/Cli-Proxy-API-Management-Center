@@ -23,3 +23,16 @@ export function IconChevronRight({ size = 20, ...props }: IconProps) {
     </svg>
   );
 }
+
+/** Lucide "database-zap": stored data served fast, for the prompt cache page */
+export function IconSidebarCache({ size = 20, ...props }: IconProps) {
+  return (
+    <svg {...baseSvgProps} width={size} height={size} {...props}>
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M3 5V19A9 3 0 0 0 15 21.84" />
+      <path d="M21 5V8" />
+      <path d="M21 12L18 17H22L19 22" />
+      <path d="M3 12A9 3 0 0 0 14.59 14.87" />
+    </svg>
+  );
+}

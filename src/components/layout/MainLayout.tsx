@@ -47,6 +47,7 @@ import {
   type PluginResourceEntry,
 } from '@/features/plugins/pluginResources';
 import { APIKEY_FUN_DISPLAY_NAME, hasApiKeyFunConfig } from '@/features/providers/sponsor';
+import { cacheNavItem } from '@/features/cache/cacheNav';
 import { triggerHeaderRefresh } from '@/hooks/useHeaderRefresh';
 import { LANGUAGE_LABEL_KEYS, LANGUAGE_ORDER } from '@/utils/constants';
 import { isSupportedLanguage } from '@/utils/language';
@@ -646,6 +647,7 @@ export function MainLayout() {
           metaKey: 'nav_meta.quota_management',
           icon: sidebarIcons.quota,
         },
+        cacheNavItem,
         {
           path: '/logs',
           labelKey: 'nav.logs',

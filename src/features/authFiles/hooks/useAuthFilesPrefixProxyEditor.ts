@@ -32,6 +32,14 @@ import {
   validateCredentialWeightText,
   type CredentialWeightError,
 } from '@/utils/credentialWeight';
+import {
+  addQuotaWeightPatch,
+  applyQuotaWeightPatch,
+  quotaWeightEditorFields,
+  updateQuotaWeight,
+  type QuotaWeightEditorFields,
+  type QuotaWeightError,
+} from '@/features/authFiles/quotaWeight';
 
 type AuthFileHeaders = Record<string, string>;
 type AuthFileHeadersErrorKey =
@@ -41,7 +49,7 @@ type AuthFileHeadersErrorKey =
 type AuthFileContentErrorKey =
   'auth_files.prefix_proxy_invalid_json' | 'auth_files.prefix_proxy_html_challenge';
 type AuthFileWeightErrorKey = 'auth_files.weight_invalid_integer' | 'auth_files.weight_invalid_max';
-type AuthFileEditorErrorKey = AuthFileHeadersErrorKey | AuthFileWeightErrorKey;
+type AuthFileEditorErrorKey = AuthFileHeadersErrorKey | AuthFileWeightErrorKey | QuotaWeightError;
 
 export type PrefixProxyEditorField =
   | CredentialPolicyField
@@ -49,6 +57,7 @@ export type PrefixProxyEditorField =
   | 'proxyUrl'
   | 'priority'
   | 'weight'
+  | 'quotaWeight'
   | 'disableCooling'
   | 'websockets'
   | 'usingApi'
@@ -59,7 +68,7 @@ export type PrefixProxyEditorField =
 
 export type PrefixProxyEditorFieldValue = string | boolean | CredentialPolicyValue;
 
-export type PrefixProxyEditorState = {
+export type PrefixProxyEditorState = QuotaWeightEditorFields & {
   policy?: CredentialPolicyDraft;
   fileName: string;
   fileInfoText: string;
@@ -335,6 +344,8 @@ export const buildAuthFileFieldsPatch = (
     patch.weight = nextWeight;
   }
 
+  addQuotaWeightPatch(patch, editor, original, resolveError);
+
   if (editor.disableCoolingTouched) {
     const originalDisableCooling = readAuthFileDisableCooling(original);
     const nextDisableCooling = Boolean(editor.disableCooling);
@@ -441,6 +452,8 @@ const buildPrefixProxyUpdatedText = (
     }
   }
 
+  applyQuotaWeightPatch(next, patch);
+
   if (patch.disable_cooling !== undefined) {
     next.disable_cooling = patch.disable_cooling;
   }
@@ -495,6 +508,7 @@ export function useAuthFilesPrefixProxyEditor(
   const hasBlockingValidationError = Boolean(
     (prefixProxyEditor?.headersTouched && prefixProxyEditor.headersError) ||
     prefixProxyEditor?.weightError ||
+    prefixProxyEditor?.quotaWeightError ||
     credentialPolicyError(prefixProxyEditor?.policy)
   );
   const prefixProxyUpdatedText =
@@ -634,6 +648,7 @@ export function useAuthFilesPrefixProxyEditor(
           priority: priority !== undefined ? String(priority) : '',
           weight: weight !== undefined ? String(weight) : '',
           weightError: null,
+          ...quotaWeightEditorFields(json),
           disableCooling,
           disableCoolingTouched: false,
           websockets,
@@ -692,6 +707,7 @@ export function useAuthFilesPrefixProxyEditor(
           weightError: error ? t(credentialWeightErrorKey(error)) : null,
         };
       }
+      if (field === 'quotaWeight') return { ...prev, ...updateQuotaWeight(value, (key) => t(key)) };
       if (field === 'disableCooling') {
         return {
           ...prev,

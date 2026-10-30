@@ -1,0 +1,219 @@
+@use '../../../styles/mixins' as *;
+
+/* Pooled quota chart. Lines take the provider color; every text stays in ink tokens. */
+
+$plot-height: 210px;
+$plot-top: 24px;
+$axis-width: 46px;
+
+.chart {
+  display: grid;
+  grid-template-columns: $axis-width minmax(0, 1fr);
+  grid-template-rows: auto 26px;
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.yAxis {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1;
+  height: $plot-height;
+  margin-top: $plot-top;
+}
+
+.yTick {
+  position: absolute;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.plot {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
+  height: $plot-height;
+  margin-top: $plot-top;
+  touch-action: pan-y;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.gridline {
+  stroke: var(--border-color);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+
+.baseline {
+  stroke: var(--border-primary);
+  stroke-width: 1;
+}
+
+.recordedLine,
+.projectedLine {
+  fill: none;
+  stroke: var(--pool-color);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.projectedLine {
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+  opacity: 0.9;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nowRule,
+.hoverRule {
+  position: absolute;
+  top: -6px;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+  background: var(--text-quaternary);
+}
+
+.hoverRule {
+  top: 0;
+  background: color-mix(in srgb, var(--text-tertiary) 60%, transparent);
+}
+
+.nowLabel {
+  position: absolute;
+  top: -22px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.nowDot,
+.hoverDot,
+.emptyDot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--pool-color);
+  box-shadow: 0 0 0 2px var(--bg-primary);
+}
+
+.nowDot {
+  background: var(--text-primary);
+  box-shadow:
+    0 0 0 2px var(--pool-color),
+    0 0 0 4px var(--bg-primary);
+}
+
+.emptyDot {
+  width: 10px;
+  height: 10px;
+  background: var(--bg-primary);
+  border: 2px solid var(--text-primary);
+  box-shadow: none;
+}
+
+.stepLabel {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 6px));
+  font-size: 11px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.emptyLabel {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 10px));
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--bg-primary);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.emptyLabelLeft {
+  transform: translate(calc(-100% + 8px), calc(-100% - 10px));
+}
+
+.tooltip {
+  position: absolute;
+  top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-left: 10px;
+  padding: 7px 9px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--floating-surface);
+  box-shadow: var(--floating-shadow);
+  font-size: 11.5px;
+  white-space: nowrap;
+}
+
+.tooltipLeft {
+  margin-left: 0;
+  transform: translateX(calc(-100% - 10px));
+}
+
+.tooltipTime,
+.tooltipKind {
+  color: var(--text-tertiary);
+}
+
+.tooltipValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.xAxis {
+  position: relative;
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.xTick {
+  position: absolute;
+  top: 8px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.xTickToday {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+@include mobile {
+  /* fourteen labels cannot fit a phone: keep every other day */
+  .xTick:nth-child(even) {
+    visibility: hidden;
+  }
+
+  /* reset gains collide at this width; the stats row still names the next one */
+  .stepLabel {
+    display: none;
+  }
+}

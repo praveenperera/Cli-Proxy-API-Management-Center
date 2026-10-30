@@ -61,6 +61,8 @@ export type CodexQuotaData = {
   rateLimitResetCredits: CodexRateLimitResetCredit[];
   rateLimitResetCreditsError: string;
   windows: CodexQuotaWindow[];
+  /** When the usage response arrived, epoch ms. */
+  observedAtMs?: number;
 };
 
 export const buildCodexQuotaWindows = (
@@ -440,6 +442,8 @@ const fetchCodexQuota = async (file: AuthFileItem, t: TFunction): Promise<CodexQ
   if (result.statusCode < 200 || result.statusCode >= 300) {
     throw createStatusError(getApiCallErrorMessage(result), result.statusCode);
   }
+  // stamp the usage read itself, not the reset-credit lookup that follows
+  const observedAtMs = Date.now();
 
   const payload = parseCodexUsagePayload(result.body ?? result.bodyText);
   if (!payload) {
@@ -474,6 +478,7 @@ const fetchCodexQuota = async (file: AuthFileItem, t: TFunction): Promise<CodexQ
     rateLimitResetCredits: resetCreditsData.credits,
     rateLimitResetCreditsError: resetCreditsData.error,
     windows,
+    observedAtMs,
   };
 };
 
@@ -566,6 +571,7 @@ export const CODEX_CONFIG: QuotaProviderData<CodexQuotaState, CodexQuotaData> = 
       data.rateLimitResetCreditsApplicableAvailableCount,
     rateLimitResetCredits: data.rateLimitResetCredits,
     rateLimitResetCreditsError: data.rateLimitResetCreditsError,
+    observedAtMs: data.observedAtMs ?? null,
   }),
   buildErrorState: (message, status) => ({
     status: 'error',

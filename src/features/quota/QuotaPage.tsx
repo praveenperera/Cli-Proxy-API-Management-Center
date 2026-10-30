@@ -25,7 +25,9 @@ import { getQuotaCacheKey } from '@/utils/quota/identity';
 import { ProviderTabs } from '@/features/authFiles/components/ProviderTabs';
 import { QuotaHeader } from './components/QuotaHeader';
 import { QuotaCard } from './components/QuotaCard';
-import { QuotaTimeline } from './components/QuotaTimeline';
+import { QuotaEmailToggle } from './components/QuotaEmailToggle';
+import { QuotaPoolToolbar } from './components/QuotaPoolToolbar';
+import { AccountQuotaTimeline, AccountsOnlyDiv, QuotaPoolBody } from './components/QuotaPoolBody';
 import {
   CARD_ENTRANCE_BUDGET_MS,
   QUOTA_PAGE_SIZE,
@@ -50,6 +52,7 @@ import type { QuotaProviderType } from './providers/types';
 import { useDevinQuotaAutoLoad } from './providers/devin/useDevinQuotaAutoLoad';
 import { useQuotaActions } from './hooks/useQuotaActions';
 import { useQuotaBatchLoader } from './hooks/useQuotaBatchLoader';
+import { useQuotaPools } from './hooks/useQuotaPools';
 import { readQuotaUiState, writeQuotaUiState } from './uiState';
 import styles from './QuotaPage.module.scss';
 
@@ -252,6 +255,7 @@ export function QuotaPage() {
 
   const { batchLoading, loadQuota } = useQuotaBatchLoader();
   const { resettingQuotaName, refreshQuota, resetQuota } = useQuotaActions(disableControls);
+  const { loadTabQuota, ...quotaPools } = useQuotaPools({ entries, tab, getQuota, loadQuota });
 
   const pendingRefreshRef = useRef<number | null>(null);
   const prevLoadingRef = useRef(loading);
@@ -285,9 +289,9 @@ export function QuotaPage() {
         disableControls
       )
     ) {
-      void loadQuota(pageItems);
+      void loadTabQuota(requestedSession);
     }
-  }, [disableControls, error, filesGeneration, loading, loadQuota, pageItems, sessionGeneration]);
+  }, [disableControls, error, filesGeneration, loading, loadTabQuota, sessionGeneration]);
 
   useDevinQuotaAutoLoad(
     pageItems,
@@ -331,6 +335,7 @@ export function QuotaPage() {
         attentionCount={attentionCount}
         refreshing={loading || batchLoading}
         disableControls={disableControls}
+        extraActions={<QuotaEmailToggle {...quotaPools.emailToggle} />}
         onRefreshAll={handleRefreshAll}
       />
 
@@ -346,7 +351,9 @@ export function QuotaPage() {
           />
         </div>
 
-        <div className={styles.toolbar}>
+        <QuotaPoolToolbar {...quotaPools.toolbar} />
+
+        <AccountsOnlyDiv show={quotaPools.showAccounts} className={styles.toolbar}>
           <div className={styles.search}>
             <IconSearch size={16} className={styles.searchIcon} aria-hidden="true" />
             <input
@@ -382,7 +389,7 @@ export function QuotaPage() {
               size="sm"
             />
           </div>
-        </div>
+        </AccountsOnlyDiv>
 
         {error && (
           <div className={styles.errorBanner} role="alert">
@@ -390,7 +397,23 @@ export function QuotaPage() {
           </div>
         )}
 
-        {loading ? (
+        {/* the pooled view always renders; upstream's grid branches below stay unchanged */}
+        {quotaPools ? (
+          <QuotaPoolBody
+            {...quotaPools.view}
+            loading={loading}
+            filteredCount={filteredEntries.length}
+            pageItems={pageItems}
+            getQuota={getQuota}
+            canUseActions={canUseActions}
+            resettingQuotaName={resettingQuotaName}
+            cardEntranceDelay={cardEntranceDelay}
+            onTabChange={handleTabChange}
+            onSearchChange={handleSearchChange}
+            onRefresh={refreshQuota}
+            onReset={resetQuota}
+          />
+        ) : loading ? (
           <div className={styles.grid} aria-hidden="true">
             {Array.from({ length: SKELETON_CARD_COUNT }, (_, index) => (
               <Skeleton key={index} height={168} rounded={14} />
@@ -442,7 +465,7 @@ export function QuotaPage() {
           </div>
         )}
 
-        {!loading && filteredEntries.length > QUOTA_PAGE_SIZE && (
+        {quotaPools.showAccounts && !loading && filteredEntries.length > QUOTA_PAGE_SIZE && (
           <div className={styles.pagination}>
             <Button
               variant="secondary"
@@ -471,7 +494,8 @@ export function QuotaPage() {
         )}
 
         {/* 时间线只比较当前页凭证，避免大量凭证一次性生成无界泳道。 */}
-        <QuotaTimeline
+        <AccountQuotaTimeline
+          show={quotaPools.showAccounts && !loading}
           entries={pageItems}
           quotaFor={getQuota}
           displayNameFor={displayNameFor}

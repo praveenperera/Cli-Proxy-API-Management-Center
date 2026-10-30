@@ -1,0 +1,193 @@
+@use '../../../styles/mixins' as *;
+
+/* One window's recorded usage. The used line takes the provider color, pace and resets stay in ink tokens. */
+
+$plot-height: 112px;
+$plot-top: 18px;
+$axis-width: 38px;
+
+.chart {
+  display: grid;
+  grid-template-columns: $axis-width minmax(0, 1fr);
+  grid-template-rows: auto 22px;
+  min-width: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.yAxis {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1;
+  height: $plot-height;
+  margin-top: $plot-top;
+}
+
+.yTick {
+  position: absolute;
+  right: 8px;
+  transform: translateY(-50%);
+  font-size: 10.5px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.plot {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
+  height: $plot-height;
+  margin-top: $plot-top;
+  touch-action: pan-y;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.gridline {
+  stroke: var(--border-color);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+
+.baseline {
+  stroke: var(--border-primary);
+  stroke-width: 1;
+}
+
+.gap {
+  fill: var(--text-tertiary);
+  fill-opacity: 0.08;
+}
+
+.area {
+  fill: var(--pool-color);
+  fill-opacity: 0.14;
+  stroke: none;
+}
+
+.used {
+  fill: none;
+  stroke: var(--pool-color);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.pace {
+  fill: none;
+  stroke: var(--text-tertiary);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+  opacity: 0.85;
+}
+
+.reset {
+  stroke: var(--text-tertiary);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+  opacity: 0.8;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.endLabel {
+  position: absolute;
+  top: -17px;
+  transform: translateX(calc(-100% - 4px));
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* near the left edge the label goes right of its line */
+.endLabelRight {
+  transform: translateX(4px);
+}
+
+.hoverRule {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  transform: translateX(-50%);
+  background: color-mix(in srgb, var(--text-tertiary) 60%, transparent);
+}
+
+.hoverDot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--pool-color);
+  box-shadow: 0 0 0 2px var(--bg-primary);
+}
+
+.tooltip {
+  position: absolute;
+  top: 4px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-left: 10px;
+  padding: 7px 9px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--floating-surface);
+  box-shadow: var(--floating-shadow);
+  font-size: 11.5px;
+  white-space: nowrap;
+}
+
+.tooltipLeft {
+  margin-left: 0;
+  transform: translateX(calc(-100% - 10px));
+}
+
+.tooltipTime,
+.tooltipNote {
+  color: var(--text-tertiary);
+}
+
+.tooltipValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.xAxis {
+  position: relative;
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.xTick {
+  position: absolute;
+  top: 6px;
+  transform: translateX(-50%);
+  font-size: 10.5px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.xTickDay {
+  color: var(--text-secondary);
+}
+
+@include mobile {
+  /* about eight labels cannot fit a phone: keep every other one, newest included */
+  .xTick:nth-last-child(even) {
+    visibility: hidden;
+  }
+}

@@ -15,6 +15,7 @@ import { IconRefreshCw } from '@/components/ui/icons';
 import { bindQuotaClasses } from '@/features/quota/types';
 import { QUOTA_ADAPTERS, type QuotaCardState } from '@/features/quota/providers';
 import { hasClaudeUsageData } from '@/features/quota/providers/claude/data';
+import { useAutoLoadQuota } from '../hooks/useAutoLoadQuota';
 import styles from './AuthFileQuota.module.scss';
 
 /** Bind the auth-file host's compact styles to the quota rendering contract. */
@@ -159,6 +160,8 @@ export function AuthFileQuotaSection(props: AuthFileQuotaSectionProps) {
     t,
     updateQuotaState,
   ]);
+
+  useAutoLoadQuota(file, quotaType, quota, disableControls, resettingQuota);
 
   const quotaStatus = quota?.status ?? 'idle';
   const canRefreshQuota = !disableControls && !file.disabled && !resettingQuota;

@@ -304,6 +304,8 @@ export interface CodexQuotaState {
   rateLimitResetCreditsApplicableAvailableCount?: number | null;
   rateLimitResetCredits?: CodexRateLimitResetCredit[];
   rateLimitResetCreditsError?: string;
+  /** When the usage was fetched, epoch ms; anchors the quota pool's current value. */
+  observedAtMs?: number | null;
   error?: string;
   errorStatus?: number;
 }

@@ -1,0 +1,14 @@
+/* one pooled card per provider; its account cards (when shown) follow it */
+.pools {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.poolGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}

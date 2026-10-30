@@ -1,0 +1,208 @@
+@use '../../../styles/mixins' as *;
+
+/* Pooled provider card: same surface recipe as the per-credential quota card. */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  background: color-mix(in srgb, var(--bg-primary) 82%, transparent);
+  min-width: 0;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  min-width: 0;
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.iconWrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.iconFallback {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--text-primary);
+}
+
+.count {
+  font-size: 12.5px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.headline {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.remaining {
+  font-size: clamp(34px, 4.4vw, 42px);
+  line-height: 1.1;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.total {
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 6px 36px;
+  margin: 6px 0 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.statValue {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  white-space: nowrap;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+.statMuted {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.accountName {
+  display: inline-block;
+  max-width: 18ch;
+  vertical-align: bottom;
+  @include text-ellipsis;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  padding: 2px 0 2px 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.legendTitle {
+  min-width: 46px;
+  color: var(--text-secondary);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--text-tertiary);
+}
+
+.legendSolid,
+.legendDashed {
+  width: 16px;
+  height: 0;
+  border-top: 2px solid var(--pool-color);
+}
+
+.legendDashed {
+  border-top-style: dashed;
+}
+
+.legendNote {
+  margin-left: auto;
+  color: var(--text-tertiary);
+}
+
+.emptyNote {
+  margin: 10px 0 6px;
+  font-size: 13px;
+  color: var(--text-tertiary);
+}
+
+@include tablet {
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, auto));
+  }
+}
+
+@include mobile {
+  .top {
+    flex-direction: column;
+  }
+
+  .stats {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 16px;
+  }
+
+  .statValue {
+    white-space: normal;
+  }
+
+  .legendNote {
+    margin-left: 0;
+  }
+}

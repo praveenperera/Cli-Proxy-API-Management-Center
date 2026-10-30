@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconRefreshCw } from '@/components/ui/icons';
 import { useCountUp } from '@/hooks/motion';
@@ -9,6 +10,8 @@ export type QuotaHeaderProps = {
   attentionCount: number;
   refreshing: boolean;
   disableControls: boolean;
+  /** Controls placed before Refresh all, such as the email toggle */
+  extraActions?: ReactNode;
   onRefreshAll: () => void;
 };
 
@@ -55,6 +58,7 @@ export function QuotaHeader(props: QuotaHeaderProps) {
         </p>
       </div>
       <div className={styles.actions} data-reveal>
+        {props.extraActions}
         <button
           type="button"
           className={styles.primaryAction}

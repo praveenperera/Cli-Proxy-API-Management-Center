@@ -20,7 +20,7 @@ import {
 import { MAX_CREDENTIAL_WEIGHT } from '@/utils/credentialWeight';
 import { AuthFileExcludedModelsField } from './AuthFileExcludedModelsField';
 import { AuthFilePolicyFields } from './AuthFilePolicyFields';
-import { RoutingOrderField } from './AuthFileRoutingFields';
+import { PlanSizeField, RoutingOrderField } from './AuthFileRoutingFields';
 import { credentialPolicyError, readCredentialPolicy } from '../credentialPolicy';
 import styles from './AuthFileDetailsSheet.module.scss';
 
@@ -158,6 +158,7 @@ export function AuthFileDetailsSheet(props: AuthFileDetailsSheetProps) {
               !editor?.json ||
               Boolean(editor?.headersTouched && editor.headersError) ||
               Boolean(editor?.weightError) ||
+              Boolean(editor?.quotaWeightError) ||
               Boolean(credentialPolicyError(editor?.policy))
             }
           >
@@ -236,6 +237,11 @@ export function AuthFileDetailsSheet(props: AuthFileDetailsSheetProps) {
                     error={editor.weightError ?? undefined}
                     disabled={disableControls || editor.saving || !editor.json}
                     onChange={(e) => onChange('weight', e.target.value)}
+                  />
+                  <PlanSizeField
+                    editor={editor}
+                    disabled={disableControls || editor.saving || !editor.json}
+                    onChange={onChange}
                   />
                   <div className="form-group">
                     <label>{t('auth_files.disable_cooling_label')}</label>

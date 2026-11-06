@@ -197,5 +197,9 @@
     "sort_cost": "비용",
     "unpriced_one": "가격 정보가 없는 요청 {{count}}건 제외",
     "unpriced_other": "가격 정보가 없는 요청 {{count}}건 제외"
+  },
+  "claude_quota": {
+    "plan_max5": "Max",
+    "plan_max20": "Ultra"
   }
 }

@@ -191,5 +191,9 @@
     "sort_recent": "最近",
     "sort_cost": "费用",
     "unpriced_other": "不含 {{count}} 个无定价的请求"
+  },
+  "claude_quota": {
+    "plan_max5": "Max",
+    "plan_max20": "Ultra"
   }
 }

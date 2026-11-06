@@ -11,6 +11,7 @@ import { QuotaMeter } from '../../components/QuotaMeter';
 import { QuotaResetLabel } from '../../components/QuotaResetLabel';
 import { collectQuotaRowInstants, pickUrgentRowId } from '../../resetSchedule';
 import type { QuotaBodyProps } from '../../types';
+import { claudePlanValueClass } from './planTier';
 
 export function ClaudeQuotaBody({
   quota,
@@ -27,6 +28,7 @@ export function ClaudeQuotaBody({
   const windows = quota.windows ?? [];
   const extraUsage = quota.extraUsage ?? null;
   const planType = quota.planType ?? null;
+  const planValueClass = claudePlanValueClass(planType, classes);
   const language = i18n.resolvedLanguage;
   const formatMoney = (value: number | null, currency = 'USD', divisor = 1): string => {
     if (value === null) return '--';
@@ -64,7 +66,7 @@ export function ClaudeQuotaBody({
           {planType && (
             <span className={classes.codexPlanItem}>
               <span className={classes.codexPlanLabel}>{t('claude_quota.plan_label')}</span>
-              <span className={classes.codexPlanValue}>{t(`claude_quota.${planType}`)}</span>
+              <span className={planValueClass}>{t(`claude_quota.${planType}`)}</span>
             </span>
           )}
           {planItems}

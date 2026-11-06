@@ -209,5 +209,9 @@
     "unpriced_few": "Без {{count}} запросов без цены",
     "unpriced_many": "Без {{count}} запросов без цены",
     "unpriced_other": "Без {{count}} запроса без цены"
+  },
+  "claude_quota": {
+    "plan_max5": "Max",
+    "plan_max20": "Ultra"
   }
 }

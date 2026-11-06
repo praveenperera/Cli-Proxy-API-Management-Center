@@ -33,6 +33,7 @@ import {
 } from '@/utils/quota';
 import { normalizeAuthIndex } from '@/utils/authIndex';
 import type { QuotaProviderData } from '../types';
+import { resolveClaudePlanTier } from './planTier';
 
 export type ClaudeQuotaData = {
   windows: ClaudeQuotaWindow[];
@@ -234,8 +235,9 @@ const fetchClaudeQuota = async (file: AuthFileItem, t: TFunction): Promise<Claud
     profileResult.status === 'fulfilled' &&
     profileResult.value.statusCode >= 200 &&
     profileResult.value.statusCode < 300
-      ? resolveClaudePlanType(
-          parseClaudeProfilePayload(profileResult.value.body ?? profileResult.value.bodyText)
+      ? resolveClaudePlanTier(
+          parseClaudeProfilePayload(profileResult.value.body ?? profileResult.value.bodyText),
+          resolveClaudePlanType
         )
       : null;
 

@@ -197,5 +197,9 @@
     "sort_cost": "Chi phí",
     "unpriced_one": "Không tính {{count}} yêu cầu chưa có giá",
     "unpriced_other": "Không tính {{count}} yêu cầu chưa có giá"
+  },
+  "claude_quota": {
+    "plan_max5": "Max",
+    "plan_max20": "Ultra"
   }
 }

@@ -197,5 +197,9 @@
     "sort_cost": "Cost",
     "unpriced_one": "Excludes {{count}} request without a price",
     "unpriced_other": "Excludes {{count}} requests without a price"
+  },
+  "claude_quota": {
+    "plan_max5": "Max",
+    "plan_max20": "Ultra"
   }
 }
